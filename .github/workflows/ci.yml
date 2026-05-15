@@ -32,7 +32,7 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Analiza statyczna (pylint, próg 8.0)
-        run: pylint --fail-under=8.0 data model app api tests
+        run: pylint --fail-under=8.0 data model app api tests experiments
 
       - name: Testy jednostkowe (pytest)
         run: pytest tests/ -v

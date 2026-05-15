@@ -29,8 +29,10 @@ dogid/
 ├── app/                 # Warstwa aplikacji
 │   └── streamlit_app.py # Interfejs Streamlit
 ├── api/                 # Warstwa API
-│   └── main.py          # REST API w FastAPI (/health, /predict)
+│   └── main.py          # REST API w FastAPI (/health, /metrics, /predict)
 ├── tests/               # Testy jednostkowe (pytest)
+├── notebooks/           # Eksploracja danych (Jupyter, EDA + confusion matrix)
+├── experiments/         # Eksperymenty porównawcze (compare_models.py)
 ├── models/              # Wytrenowane wagi (.pt)
 ├── docs/                # Dokumenty zaliczeniowe
 ├── .github/workflows/   # CI (GitHub Actions: pylint + pytest)
@@ -161,6 +163,45 @@ i są ignorowane przez Git (zob. `.gitignore`):
 - `data/processed/` — przefiltrowane i podzielone dane (`train/`, `val/`, `test/`)
 - `models/dogid.pt` — wytrenowany model (artefakt binarny, ~10 MB)
 - `venv/` — wirtualne środowisko Python
+
+### Eksploracja danych (notebook)
+
+```bash
+jupyter notebook notebooks/data_exploration.ipynb
+```
+
+Notebook generuje wykresy:
+- rozkład klas w zbiorach train/val/test,
+- przykładowe zdjęcia z każdej rasy,
+- preview augmentacji (oryginał vs po transformacji),
+- **confusion matrix** na zbiorze testowym (wymaga wytrenowanego modelu).
+
+### Eksperymenty komparatywne
+
+Porównanie trzech backbone'ów ImageNet (MobileNetV2 / ResNet18 / EfficientNet-B0):
+
+```bash
+python -m experiments.compare_models
+```
+
+Skrypt trenuje każdy model przez 2 epoki na tym samym podziale danych,
+mierzy val accuracy, czas treningu i liczbę parametrów. Wynik trafia do
+`experiments/comparison.png`.
+
+### Monitoring API (Prometheus)
+
+REST API udostępnia metryki pod `GET /metrics` w formacie Prometheus:
+
+- `dogid_predict_requests_total` — counter zapytań
+- `dogid_predict_errors_total{error_type=...}` — counter błędów
+- `dogid_predict_duration_seconds` — histogram czasu predykcji
+- `dogid_model_loaded` — gauge (1 jeśli model załadowany, 0 inaczej)
+
+Można podpiąć do Prometheusa albo zaciągnąć ad-hoc:
+
+```bash
+curl http://localhost:8000/metrics
+```
 
 ## Autorzy
 

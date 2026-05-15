@@ -59,3 +59,17 @@ def test_predict_rejects_invalid_image() -> None:
     response = client.post("/predict", files=files)
     assert response.status_code == 400
     assert "Nieprawidłowy obraz" in response.json()["detail"]
+
+
+def test_metrics_endpoint_returns_prometheus_format() -> None:
+    """GET /metrics zwraca metryki w formacie Prometheus z naszymi nazwami."""
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    assert "text/plain" in response.headers["content-type"]
+
+    body = response.text
+    # Każda zdefiniowana metryka powinna być widoczna w outpucie.
+    assert "dogid_predict_requests_total" in body
+    assert "dogid_predict_errors_total" in body
+    assert "dogid_predict_duration_seconds" in body
+    assert "dogid_model_loaded" in body
