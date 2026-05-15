@@ -1,0 +1,33 @@
+# Cache Pythona
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# Wirtualne środowiska
+venv/
+.venv/
+env/
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Generowane dane (pobierane skryptem, nie powinny ciążyć obrazowi)
+data/raw/
+data/processed/
+data/stanford_dogs/
+
+# Logi i artefakty buildowe
+*.log
+*.err
+.pytest_cache/
+
+# Dokumenty zaliczeniowe
+docs/
+
+# Pliki IDE
+.vscode/
+.idea/
+*.swp

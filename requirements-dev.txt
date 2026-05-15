@@ -3,3 +3,4 @@
 -r requirements.txt
 pylint>=3.0
 pytest>=8.0
+httpx>=0.27

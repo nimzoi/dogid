@@ -28,8 +28,14 @@ dogid/
 │   └── predict.py       # Inference (predykcja top-3 dla pojedynczego obrazu)
 ├── app/                 # Warstwa aplikacji
 │   └── streamlit_app.py # Interfejs Streamlit
+├── api/                 # Warstwa API
+│   └── main.py          # REST API w FastAPI (/health, /predict)
+├── tests/               # Testy jednostkowe (pytest)
 ├── models/              # Wytrenowane wagi (.pt)
 ├── docs/                # Dokumenty zaliczeniowe
+├── .github/workflows/   # CI (GitHub Actions: pylint + pytest)
+├── Dockerfile           # Multi-stage build obrazu produkcyjnego
+├── docker-compose.yml   # Orkiestracja serwisów Streamlit + API
 ├── requirements.txt
 ├── .pylintrc
 └── README.md
@@ -68,13 +74,53 @@ ustawić `DEVICE=cuda` w `model/train.py`.
 
 ## Uruchomienie aplikacji
 
+Aplikacja udostępnia dwa sposoby serwowania modelu — interfejs webowy
+(Streamlit) i REST API (FastAPI). Można uruchomić je natywnie albo
+w kontenerach Docker.
+
+### Natywnie (Streamlit, port 8501)
+
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-Aplikacja otworzy się pod adresem `http://localhost:8501`. Wgraj zdjęcie psa
-(JPG/PNG) – w odpowiedzi otrzymasz trzy najbardziej prawdopodobne rasy oraz
-informację o rasie z najwyższym prawdopodobieństwem.
+Otworzy się pod `http://localhost:8501`. Wgraj zdjęcie psa (JPG/PNG)
+– otrzymasz trzy najbardziej prawdopodobne rasy z opisem.
+
+### Natywnie (REST API, port 8000)
+
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+Endpointy:
+- `GET /` — informacja o usłudze
+- `GET /health` — health check (200 jeśli model załadowany)
+- `POST /predict` — predykcja (multipart/form-data, pole `image`)
+
+Przykładowe wywołanie:
+```bash
+curl -X POST -F "image=@pies.jpg" http://localhost:8000/predict
+```
+
+Dokumentacja interaktywna (Swagger UI) pod `http://localhost:8000/docs`.
+
+### W kontenerach (Docker Compose)
+
+Najbardziej przenośny sposób — wystarczy mieć zainstalowany Docker.
+
+```bash
+docker compose up --build
+```
+
+Po zbudowaniu obrazu (~5 min) ruszą oba serwisy:
+- Streamlit: `http://localhost:8501`
+- FastAPI: `http://localhost:8000`
+
+Model (`models/dogid.pt`) jest podpinany jako wolumen — można go podmienić
+bez rebuildowania obrazu.
+
+Zatrzymanie: `docker compose down`.
 
 ## Wspierane rasy
 

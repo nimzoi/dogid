@@ -1,0 +1,26 @@
+services:
+  # Aplikacja webowa z interfejsem użytkownika (upload zdjęcia + top-3 predykcji)
+  streamlit:
+    build: .
+    image: dogid:latest
+    container_name: dogid-streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      # Model podpinamy z hosta - można podmienić wagi bez rebuildowania obrazu
+      - ./models:/app/models
+    restart: unless-stopped
+
+  # REST API serwujące ten sam model przez HTTP (POST /predict)
+  api:
+    build: .
+    image: dogid:latest
+    container_name: dogid-api
+    ports:
+      - "8000:8000"
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./models:/app/models
+    depends_on:
+      - streamlit
+    restart: unless-stopped

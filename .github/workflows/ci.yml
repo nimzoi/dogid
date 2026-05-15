@@ -1,0 +1,38 @@
+name: CI
+
+# Uruchamia analizę statyczną (pylint) i testy jednostkowe (pytest)
+# na każdy push i pull request do brancha main.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Pobranie kodu
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalacja zależności
+        run: |
+          python -m pip install --upgrade pip
+          # PyTorch CPU - jawnie wskazujemy CPU index, żeby nie ściągać CUDA (1+ GB).
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements-dev.txt
+
+      - name: Analiza statyczna (pylint, próg 8.0)
+        run: pylint --fail-under=8.0 data model app api tests
+
+      - name: Testy jednostkowe (pytest)
+        run: pytest tests/ -v
