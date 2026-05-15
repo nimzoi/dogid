@@ -29,7 +29,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODELS_DIR = PROJECT_ROOT / "models"
 WEIGHTS_PATH = MODELS_DIR / "dogid.pt"
 
-NUM_EPOCHS = 10
+NUM_EPOCHS = 5
 LEARNING_RATE = 1e-3
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

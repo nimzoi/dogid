@@ -85,6 +85,37 @@ Rottweiler, Maltańczyk.
 
 Pełna lista z opisami w pliku `data/breeds.py`.
 
+## Development
+
+Praca nad kodem (poza samym uruchomieniem aplikacji):
+
+### Zależności dewelopеrskie
+
+Oprócz `requirements.txt` (potrzebnego do uruchomienia aplikacji) dostępne są
+narzędzia developerskie (pylint, pytest) w `requirements-dev.txt`:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Analiza statyczna kodu (pylint)
+
+Projekt utrzymuje ocenę **10.00/10** w pylint na całym kodzie aplikacji.
+Konfiguracja znajduje się w `.pylintrc`.
+
+```bash
+pylint data model app
+```
+
+### Struktura katalogów generowanych przy uruchomieniu
+
+Następujące katalogi są tworzone automatycznie po pierwszym uruchomieniu pipeline'u
+i są ignorowane przez Git (zob. `.gitignore`):
+
+- `data/processed/` — przefiltrowane i podzielone dane (`train/`, `val/`, `test/`)
+- `models/dogid.pt` — wytrenowany model (artefakt binarny, ~10 MB)
+- `venv/` — wirtualne środowisko Python
+
 ## Autorzy
 
 Projekt zaliczeniowy SUML, semestr letni 2025/2026.
@@ -93,4 +124,4 @@ Grupa: *do uzupełnienia (imię, nazwisko, numer indeksu)*.
 
 ## Licencja
 
-MIT
+[MIT](LICENSE)
