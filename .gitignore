@@ -44,10 +44,11 @@ models/*.keras
 models/*.h5
 !models/.gitkeep
 
-# Logi treningu
+# Logi treningu i pomocnicze
 runs/
 logs/
 *.log
+*.err
 
 # Pytest / coverage
 .pytest_cache/
