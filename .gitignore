@@ -28,9 +28,8 @@ ENV/
 Thumbs.db
 desktop.ini
 
-# Jupyter
+# Jupyter (checkpoint folders sa lokalne, ale notebooki w notebooks/ commitujemy)
 .ipynb_checkpoints/
-*.ipynb
 
 # Dane (pobierane skryptem)
 data/raw/
