@@ -1,5 +1,10 @@
 # DogID — "Co to za pies?"
 
+[![CI](https://github.com/nimzoi/dogid/actions/workflows/ci.yml/badge.svg)](https://github.com/nimzoi/dogid/actions/workflows/ci.yml)
+[![Pylint](https://img.shields.io/badge/pylint-10.00%2F10-brightgreen)](.pylintrc)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 Aplikacja webowa klasyfikująca rasę psa ze zdjęcia. Projekt zaliczeniowy
 z przedmiotu **SUML** (Środowiska uruchomieniowe Machine Learning), PJATK.
 
