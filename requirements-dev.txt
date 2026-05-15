@@ -1,0 +1,5 @@
+# Zależności dewelopеrskie - nie wymagane do uruchomienia aplikacji.
+# Instalacja: pip install -r requirements-dev.txt
+-r requirements.txt
+pylint>=3.0
+pytest>=8.0

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Dane (pobierane skryptem)
+data/raw/
+data/processed/
+data/stanford_dogs/
+
+# Wytrenowane modele (duże pliki - opcjonalnie commitować przez Git LFS)
+models/*.pt
+models/*.pth
+models/*.keras
+models/*.h5
+!models/.gitkeep
+
+# Logi treningu
+runs/
+logs/
+*.log
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/

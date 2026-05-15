@@ -1,0 +1,30 @@
+[MASTER]
+# Katalogi do zignorowania przy analizie statycznej
+ignore=venv,env,.venv,build,dist,models,data/raw,data/processed,docs
+
+[MESSAGES CONTROL]
+# Wyłączamy regułki niepasujące do projektu ML/Streamlit:
+# - too-few-public-methods: dataclassy i klasy konfiguracyjne często mają 1-2 metody
+# - missing-module-docstring: każdy moduł ma docstring nagłówkowy (sprawdzimy ręcznie)
+# - import-error: false positives dla torch/streamlit przed instalacją venv
+# - duplicate-code: typowe wzorce w warstwach data/model
+disable=
+    too-few-public-methods,
+    duplicate-code,
+    import-error,
+    fixme
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+
+[DESIGN]
+max-args=8
+max-locals=20
+max-attributes=10
+max-public-methods=15
+
+[REPORTS]
+output-format=text
+reports=no
+score=yes
